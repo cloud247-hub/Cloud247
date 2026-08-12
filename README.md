@@ -1,4 +1,4 @@
-# Cloud247 Cloud Hub
+# Cloud247 Toolbox hub page
 
 Landing page for `cloud247.no`, ready for GitHub Pages.
 
