@@ -1,11 +1,8 @@
-# Cloud247 Toolbox
+# ExpiryGuard V5.1 frontend
 
-## Tools
+- `index.html` - management
+- `customer.html` - customer portal
 
-- DomainGuard — https://domainguard.cloud247.no/
-- Mail Secure Score — https://mailscore.cloud247.no/
-- Intune Remediation Builder — https://intune.cloud247.no/
-- Object ID ↔ SID Converter — https://sidconverter.cloud247.no/
-- CAA Generator - https://https://caa.cloud247.no/
-- SPF Record Checker → https://spf.cloud247.no/
-- Secure File Sharing → https://sfs.cloud247.no/
+Both use Microsoft authorization code + PKCE. Management authorization and customer Viewer/Admin roles are enforced by the Worker, not by frontend JavaScript.
+
+Customer first sign-in can return `CUSTOMER_ACCESS_PENDING`. The frontend keeps the Microsoft session and explains that management approval is required. After approval, refreshing the page opens the customer's own tenant.
