@@ -57,6 +57,12 @@ a { color: inherit; }
   height: auto;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .header-badge {
   padding: 7px 12px;
   border: 1px solid rgba(250,214,58,.28);
@@ -66,6 +72,39 @@ a { color: inherit; }
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .06em;
+}
+
+.language-switcher {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+}
+
+.language-button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  color: #cbd5df;
+  background: transparent;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: background .18s ease, color .18s ease;
+}
+
+.language-button:hover,
+.language-button:focus-visible {
+  color: #fff;
+}
+
+.language-button.is-active {
+  color: var(--navy);
+  background: var(--yellow);
 }
 
 .hub-hero {
@@ -312,9 +351,17 @@ a { color: inherit; }
 
 @media (max-width: 600px) {
   .shell { width: min(100% - 28px, 1160px); }
-  .header-inner { min-height: 76px; }
-  .brand { width: 185px; }
+  .header-inner {
+    min-height: 76px;
+    padding: 14px 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+  .brand { width: 185px; margin-inline: auto; }
+  .header-actions { justify-content: center; }
   .header-badge { display: none; }
+  .language-button { min-height: 32px; padding: 0 11px; }
 
   .hub-hero {
     padding: 54px 0 70px;
@@ -379,29 +426,6 @@ a { color: inherit; }
   border: 1px solid #d5eee4;
 }
 
-.access-premium {
-  color: #5c4600;
-  background: var(--yellow-soft);
-  border: 1px solid #edd77c;
-}
-
-.premium-card {
-  border-color: #ead576;
-  box-shadow: 0 8px 28px rgba(6, 26, 47, .07);
-}
-
-.premium-card:hover {
-  border-color: #d7b92b;
-}
-
-.premium-icon {
-  background: var(--yellow);
-  color: var(--navy);
-}
-
-.premium-link {
-  background: #0b2b4c;
-}
 
 @media (max-width: 600px) {
   .tool-meta { gap: 5px; }
