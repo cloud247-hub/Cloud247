@@ -3,8 +3,8 @@
   const supported = new Set(['no', 'en']);
 
   const metaDescriptions = {
-    no: 'Cloud247 Cloud Toolbox samler gratis verkt\u00f8y for Microsoft 365, domenesikkerhet, e-postsikkerhet, sikker fildeling og Intune.',
-    en: 'Cloud247 Cloud Toolbox brings together free tools for Microsoft 365, domain security, email security, secure file sharing and Intune.'
+    no: 'Cloud247 Cloud Toolbox samler gratis verkt\u00f8y for Microsoft 365, domenesikkerhet, e-postsikkerhet, passord, sikker fildeling og Intune.',
+    en: 'Cloud247 Cloud Toolbox brings together free tools for Microsoft 365, domain security, email security, passwords, secure file sharing and Intune.'
   };
 
   const ogDescriptions = {
