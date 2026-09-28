@@ -39,8 +39,18 @@
           <p class="lead" data-no="Praktiske verkt&oslash;y for Microsoft 365, domenesikkerhet, e-post, sikker fildeling og Intune &mdash; samlet p&aring; ett sted." data-en="Practical tools for Microsoft 365, domain security, email, secure file sharing and Intune &mdash; all in one place.">Praktiske verkt&oslash;y for Microsoft 365, domenesikkerhet, e-post, sikker fildeling og Intune &mdash; samlet p&aring; ett sted.</p>
         </div>
 
+        <div class="tool-filters" role="group" data-aria-no="Filtrer etter kategori" data-aria-en="Filter by category" aria-label="Filtrer etter kategori">
+          <button class="filter-chip is-active" type="button" data-filter="all" aria-pressed="true" data-no="Alle" data-en="All">Alle</button>
+          <button class="filter-chip" type="button" data-filter="favorites" aria-pressed="false" hidden><span aria-hidden="true">&#9733;</span> <span data-no="Favoritter" data-en="Favorites">Favoritter</span></button>
+          <button class="filter-chip" type="button" data-filter="dns" aria-pressed="false" data-no="Domene &amp; DNS" data-en="Domain &amp; DNS">Domene &amp; DNS</button>
+          <button class="filter-chip" type="button" data-filter="email" aria-pressed="false" data-no="E-post" data-en="Email">E-post</button>
+          <button class="filter-chip" type="button" data-filter="security" aria-pressed="false" data-no="Sikkerhet" data-en="Security">Sikkerhet</button>
+          <button class="filter-chip" type="button" data-filter="microsoft" aria-pressed="false">Microsoft</button>
+        </div>
+        <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
+
         <div class="tool-grid" data-aria-no="Cloud247 verkt&oslash;y" data-aria-en="Cloud247 tools" aria-label="Cloud247 verkt&oslash;y">
-          <article class="tool-card">
+          <article class="tool-card" data-tool="domainguard" data-categories="dns email">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#9678;</div>
               <div class="tool-meta">
@@ -58,7 +68,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="mailscore" data-categories="email">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#9993;</div>
               <div class="tool-meta">
@@ -76,7 +86,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="caa" data-categories="dns">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#128220;</div>
               <div class="tool-meta">
@@ -92,7 +102,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="spf" data-categories="dns email">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#10003;</div>
               <div class="tool-meta">
@@ -110,7 +120,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="sfs" data-categories="security">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#8679;</div>
               <div class="tool-meta">
@@ -128,7 +138,7 @@
             </a>
           </article>
 
-          <article class="tool-card" id="password-generator">
+          <article class="tool-card" data-tool="passgen" data-categories="security" id="password-generator">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
@@ -153,7 +163,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="intune" data-categories="microsoft">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#9881;</div>
               <div class="tool-meta">
@@ -171,7 +181,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="sidconverter" data-categories="microsoft">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">&#8596;</div>
               <div class="tool-meta">
@@ -189,7 +199,7 @@
             </a>
           </article>
 
-          <article class="tool-card">
+          <article class="tool-card" data-tool="securitycentral" data-categories="security">
             <div class="tool-top">
               <div class="tool-icon" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
@@ -239,6 +249,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20260916-passgen"></script>
+  <script src="app.js?v=20260928-filters"></script>
 </body>
 </html>
