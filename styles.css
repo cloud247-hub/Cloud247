@@ -111,7 +111,27 @@ a { color: inherit; }
   padding: 72px 0 94px;
   background:
     radial-gradient(circle at 85% 0%, rgba(250,214,58,.17), transparent 27%),
-    linear-gradient(180deg, var(--navy) 0, var(--navy) 420px, var(--page) 420px);
+    var(--navy);
+}
+
+/* Navy band ends a fixed distance into the card grid, whatever the intro height */
+.hub-hero {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.tool-grid { position: relative; }
+
+.tool-grid::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 44px;
+  bottom: -100px;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  background: var(--page);
 }
 
 .hub-intro {
@@ -333,7 +353,7 @@ a { color: inherit; }
   .hub-hero {
     background:
       radial-gradient(circle at 90% 0%, rgba(250,214,58,.16), transparent 26%),
-      linear-gradient(180deg, var(--navy) 0, var(--navy) 390px, var(--page) 390px);
+    var(--navy);
   }
 
   .tool-grid { grid-template-columns: 1fr; }
@@ -367,7 +387,7 @@ a { color: inherit; }
     padding: 54px 0 70px;
     background:
       radial-gradient(circle at 95% 0%, rgba(250,214,58,.15), transparent 24%),
-      linear-gradient(180deg, var(--navy) 0, var(--navy) 440px, var(--page) 440px);
+    var(--navy);
   }
 
   .hub-intro { margin-bottom: 34px; }

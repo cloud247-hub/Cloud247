@@ -5,8 +5,8 @@
   let currentLanguage = 'no';
 
   const metaDescriptions = {
-    no: 'Cloud247 Cloud Toolbox samler gratis verktøy for Microsoft 365, domenesikkerhet, e-postsikkerhet, passord, sikker fildeling og Intune.',
-    en: 'Cloud247 Cloud Toolbox brings together free tools for Microsoft 365, domain security, email security, passwords, secure file sharing and Intune.'
+    no: 'Cloud247 Cloud Toolbox samler gratis verktøy for domene- og e-postsikkerhet, sårbarhetsovervåking, passord, sikker fildeling og Microsoft Intune og Entra.',
+    en: 'Cloud247 Cloud Toolbox brings together free tools for domain and email security, vulnerability monitoring, passwords, secure file sharing, and Microsoft Intune and Entra.'
   };
 
   const ogDescriptions = {
