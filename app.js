@@ -5,8 +5,8 @@
   let currentLanguage = 'no';
 
   const metaDescriptions = {
-    no: 'Cloud247 Cloud Toolbox samler gratis verktøy for domene- og e-postsikkerhet, sårbarhetsovervåking, passord, sikker fildeling og Microsoft Intune og Entra.',
-    en: 'Cloud247 Cloud Toolbox brings together free tools for domain and email security, vulnerability monitoring, passwords, secure file sharing, and Microsoft Intune and Entra.'
+    no: 'Cloud247 Cloud Toolbox: sjekk, overvåk og sikre domenet, e-posten og Microsoft-miljøet ditt.',
+    en: 'Cloud247 Cloud Toolbox: check, monitor and secure your domain, email and Microsoft environment.'
   };
 
   const ogDescriptions = {
@@ -94,6 +94,9 @@
 
   function renderFavorites() {
     const sorted = cards.slice().sort((a, b) => {
+      // Fixed cards (the contact card) always stay last
+      const fixedDiff = Number(a.hasAttribute('data-fixed')) - Number(b.hasAttribute('data-fixed'));
+      if (fixedDiff) return fixedDiff;
       const favoriteDiff = Number(favorites.has(b.dataset.tool)) - Number(favorites.has(a.dataset.tool));
       return favoriteDiff || Number(a.dataset.order) - Number(b.dataset.order);
     });
@@ -114,6 +117,7 @@
     if (!heading) return;
     card.dataset.order = String(index);
     card.dataset.name = heading.textContent.trim();
+    if (card.hasAttribute('data-fixed')) return;
 
     const row = document.createElement('div');
     row.className = 'tool-title-row';
