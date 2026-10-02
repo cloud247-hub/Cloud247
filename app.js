@@ -83,6 +83,12 @@
       );
     });
 
+    // A fixed card that would end up alone on the last row spans the full width instead
+    const visible = cards.filter((card) => !card.hidden);
+    cards.forEach((card) => {
+      card.classList.toggle('is-wide', card.hasAttribute('data-fixed') && !card.hidden && visible.length % 2 === 1);
+    });
+
     filterButtons.forEach((button) => {
       const active = button.dataset.filter === activeFilter;
       button.classList.toggle('is-active', active);

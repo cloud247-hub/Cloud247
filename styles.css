@@ -505,3 +505,29 @@ a { color: inherit; }
 
 .access-note svg { flex: 0 0 auto; }
 .access-note + .tool-link { margin-top: 0; }
+
+/* Contact card alone on the last row: full width, button on the right */
+.contact-card.is-wide {
+  grid-column: 1 / -1;
+  min-height: auto;
+}
+
+@media (min-width: 821px) {
+  .contact-card.is-wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 48px;
+  }
+  .contact-card.is-wide > * { grid-column: 1; }
+  .contact-card.is-wide .tool-top { justify-content: flex-start; gap: 18px; }
+  .contact-card.is-wide .tool-type { text-align: left; }
+  .contact-card.is-wide p { max-width: 640px; }
+  .contact-card.is-wide .tags { margin-bottom: 0; }
+  .contact-card.is-wide .tool-link {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: center;
+    min-width: 280px;
+    margin: 0;
+  }
+}
