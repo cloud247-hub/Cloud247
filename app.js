@@ -5,8 +5,8 @@
   let currentLanguage = 'no';
 
   const metaDescriptions = {
-    no: 'Cloud247 Cloud Toolbox: sjekk, overvåk og sikre domenet, e-posten og Microsoft-miljøet ditt.',
-    en: 'Cloud247 Cloud Toolbox: check, monitor and secure your domain, email and Microsoft environment.'
+    no: 'Cloud Toolbox fra Cloud247: verktøy for DMARC, SPF, DKIM og DNS, sårbarhetsovervåking og Microsoft 365, Intune og Entra. Sjekk, overvåk og sikre domenet ditt.',
+    en: 'Cloud Toolbox by Cloud247: tools for DMARC, SPF, DKIM, DNS, vulnerability monitoring and Microsoft 365, Intune and Entra. Check, monitor and secure your domain.'
   };
 
   const ogDescriptions = {

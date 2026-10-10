@@ -4,14 +4,282 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cloud Toolbox | Cloud247</title>
-  <meta id="meta-description" name="description" content="Cloud247 Cloud Toolbox: sjekk, overv&aring;k og sikre domenet, e-posten og Microsoft-milj&oslash;et ditt.">
+  <meta id="meta-description" name="description" content="Cloud Toolbox fra Cloud247: verkt&oslash;y for DMARC, SPF, DKIM og DNS, s&aring;rbarhetsoverv&aring;king og Microsoft 365, Intune og Entra. Sjekk, overv&aring;k og sikre domenet ditt.">
+  <link rel="canonical" href="https://cloud247.no/">
   <meta name="theme-color" content="#061A2F">
   <meta property="og:title" content="Cloud Toolbox | Cloud247">
   <meta id="og-description" property="og:description" content="Praktiske Cloud247-verkt&oslash;y samlet p&aring; ett sted.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cloud247.no/">
+  <meta property="og:site_name" content="Cloud247">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" href="assets/cloud247-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="styles.css?v=20261002-status">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg",
+        "email": "kontakt@cloud247.no"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://cloud247.no/#website",
+        "name": "Cloud Toolbox",
+        "url": "https://cloud247.no/",
+        "inLanguage": "nb",
+        "publisher": {
+          "@id": "https://cloud247.no/#organization"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Cloud247-verktøy",
+        "numberOfItems": 12,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "DomainGuard",
+              "url": "https://domainguard.cloud247.no/",
+              "description": "Sjekk DNSSEC, MX, SPF, DKIM, DMARC og andre viktige domeneinnstillinger.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "DMARC Overvåking",
+              "url": "https://dmarc.cloud247.no/",
+              "description": "Samler DMARC-rapporter og viser hvem som sender e-post på vegne av domenet ditt.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Security Central",
+              "url": "https://securitycentral.cloud247.no/",
+              "description": "Samler CVE-data, kjente utnyttede sårbarheter og sikkerhetsnyheter i én oversikt.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "ExpiryGuard",
+              "url": "https://expiry.cloud247.no/",
+              "description": "Overvåker utløpsdatoer for Apple Push-sertifikater, ADE- og VPP-tokens og Entra app-secrets.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Mail Secure Score",
+              "url": "https://mailscore.cloud247.no/",
+              "description": "Gir en samlet score for e-postsikkerheten til domenet ditt.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "StatusBoard",
+              "url": "https://status.cloud247.no/",
+              "description": "Statustavle for skytjenestene bedriften bruker, som Microsoft 365, Azure, GitHub og Cloudflare.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "CAA Generator",
+              "url": "https://caa.cloud247.no/",
+              "description": "Analyserer sertifikatutstedere og bygger et forslag til CAA-post.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "SPF Record Checker",
+              "url": "https://spf.cloud247.no/",
+              "description": "Analyserer SPF-posten til domenet og finner DNS-oppslag, loops og policyproblemer.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 9,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Secure File Sharing",
+              "url": "https://sfs.cloud247.no/",
+              "description": "Krypterer filer i nettleseren og deler dem via en tidsbegrenset lenke.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 10,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Password Generator",
+              "url": "https://passgen.cloud247.no/",
+              "description": "Lager passord, passfraser og PIN-koder direkte i nettleseren.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 11,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Intune Remediation Builder",
+              "url": "https://intune.cloud247.no/",
+              "description": "Lager Detection- og Remediation-scripts for Intune, Defender, ASR og Windows.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 12,
+            "item": {
+              "@type": "SoftwareApplication",
+              "name": "Object ID ↔ SID Converter",
+              "url": "https://sidconverter.cloud247.no/",
+              "description": "Konverterer Microsoft Entra Object ID til SID og tilbake, lokalt i nettleseren.",
+              "applicationCategory": "SecurityApplication",
+              "operatingSystem": "Web",
+              "publisher": {
+                "@id": "https://cloud247.no/#organization"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "NOK"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -335,6 +603,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20261002-status"></script>
+  <script src="app.js?v=20261010-seo"></script>
 </body>
 </html>
