@@ -8,6 +8,7 @@ Each source file starts with a small front matter block:
     metabeskrivelse: "..."
     publisert: "2026-10-17"        (optional, defaults to DEFAULT_DATE)
     foreslått_url: "cloud247.no/blogg/<slug>"
+    canonical: "https://..."       (optional, when the original lives elsewhere)
     ---
 
 Usage:  pip install markdown pymdown-extensions && python3 scripts/build-blog.py
@@ -156,6 +157,7 @@ def load_posts():
             "title": meta["tittel"],
             "description": meta["metabeskrivelse"],
             "published": meta.get("publisert", DEFAULT_DATE),
+            "canonical": meta.get("canonical", f"{SITE}/blogg/{slug}"),
             "md": md_text,
         })
     # Newest first
@@ -175,10 +177,11 @@ def post_card(post, heading="h2", featured=False):
 
 def build_post(post, others):
     url = f"{SITE}/blogg/{post['slug']}"
+    canonical = post["canonical"]
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "BlogPosting", "headline": post["title"], "description": post["description"],
          "datePublished": post["published"], "dateModified": post["published"], "inLanguage": "nb",
-         "url": url, "mainEntityOfPage": url, "author": ORG, "publisher": ORG},
+         "url": canonical, "mainEntityOfPage": canonical, "author": ORG, "publisher": ORG},
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Cloud Toolbox", "item": f"{SITE}/"},
             {"@type": "ListItem", "position": 2, "name": "Blogg", "item": f"{SITE}/blogg/"},
@@ -186,7 +189,7 @@ def build_post(post, others):
     ]}
     extra = f'\n  <meta property="article:published_time" content="{post["published"]}">'
     related = "\n".join(post_card(p, "h3") for p in others)
-    page = f"""{head(post['title'] + ' | Cloud247', post['description'], url, 'article', ld, extra)}
+    page = f"""{head(post['title'] + ' | Cloud247', post['description'], canonical, 'article', ld, extra)}
 <body>
 {header().replace('{current}', 'false')}
 
@@ -263,7 +266,8 @@ def build_index(posts):
 def build_sitemap(posts):
     newest = max(p["published"] for p in posts)
     urls = [(f"{SITE}/", newest), (f"{SITE}/blogg/", newest)]
-    urls += [(f"{SITE}/blogg/{p['slug']}", p["published"]) for p in posts]
+    # Posts whose canonical lives elsewhere are left out of this site's sitemap
+    urls += [(p["canonical"], p["published"]) for p in posts if p["canonical"] == f"{SITE}/blogg/{p['slug']}"]
     entries = "\n".join(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{mod}</lastmod>\n  </url>" for loc, mod in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}\n</urlset>\n',
