@@ -8,7 +8,8 @@ Each source file starts with a small front matter block:
     metabeskrivelse: "..."
     publisert: "2026-10-17"        (optional, defaults to DEFAULT_DATE)
     foreslått_url: "cloud247.no/blogg/<slug>"
-    canonical: "https://..."       (optional, when the original lives elsewhere)
+    canonical: "https://..."       (optional, when the original lives elsewhere: the blog
+                                    card then links there and /blogg/<slug> redirects to it)
     ---
 
 Usage:  pip install markdown pymdown-extensions && python3 scripts/build-blog.py
@@ -165,14 +166,42 @@ def load_posts():
     return posts
 
 
+def is_external(post):
+    return post["canonical"] != f"{SITE}/blogg/{post['slug']}"
+
+
+def post_href(post):
+    return post["canonical"] if is_external(post) else f"/blogg/{post['slug']}"
+
+
 def post_card(post, heading="h2", featured=False):
     css = "post-card is-featured" if featured else "post-card"
     return f"""        <article class="{css}">
           <p class="post-meta"><time datetime="{post['published']}">{norsk_dato(post['published'])}</time> &middot; {read_minutes(post['md'])} min lesing</p>
-          <{heading}><a href="/blogg/{post['slug']}">{esc(post['title'])}</a></{heading}>
+          <{heading}><a href="{esc(post_href(post))}">{esc(post['title'])}</a></{heading}>
           <p>{esc(post['description'])}</p>
-          <a class="post-card-link" href="/blogg/{post['slug']}" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+          <a class="post-card-link" href="{esc(post_href(post))}" aria-hidden="true" tabindex="-1">{'Les guiden' if is_external(post) else 'Les innlegget'} <span>&rarr;</span></a>
         </article>"""
+
+
+def build_redirect(post):
+    """The text lives elsewhere: /blogg/<slug> only forwards there, so old links keep working."""
+    target = esc(post["canonical"])
+    page = f"""<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <title>{esc(post['title'])} | Cloud247</title>
+  <link rel="canonical" href="{target}">
+  <meta http-equiv="refresh" content="0; url={target}">
+  <script>location.replace({json.dumps(post['canonical'])});</script>
+</head>
+<body>
+  <p>Innlegget har flyttet til <a href="{target}">{target}</a>.</p>
+</body>
+</html>
+"""
+    (OUT / f"{post['slug']}.html").write_text(page, encoding="utf-8")
 
 
 def build_post(post, others):
@@ -230,7 +259,7 @@ def build_index(posts):
     description = "Praktiske guider om e-postsikkerhet, DMARC, SPF, MTA-STS og Microsoft Intune fra Cloud247."
     ld = {"@context": "https://schema.org", "@type": "Blog", "name": "Cloud247 Blogg", "url": url,
           "description": description, "inLanguage": "nb", "publisher": ORG,
-          "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f"{SITE}/blogg/{p['slug']}",
+          "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": p["canonical"],
                         "datePublished": p["published"]} for p in posts]}
     # With an odd number of posts the newest one spans both columns, so the grid has no gap
     cards = "\n".join(post_card(p, featured=(i == 0 and len(posts) % 2 == 1)) for i, p in enumerate(posts))
@@ -267,7 +296,7 @@ def build_sitemap(posts):
     newest = max(p["published"] for p in posts)
     urls = [(f"{SITE}/", newest), (f"{SITE}/blogg/", newest)]
     # Posts whose canonical lives elsewhere are left out of this site's sitemap
-    urls += [(p["canonical"], p["published"]) for p in posts if p["canonical"] == f"{SITE}/blogg/{p['slug']}"]
+    urls += [(p["canonical"], p["published"]) for p in posts if not is_external(p)]
     entries = "\n".join(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{mod}</lastmod>\n  </url>" for loc, mod in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}\n</urlset>\n',
@@ -278,7 +307,10 @@ def main():
     posts = load_posts()
     OUT.mkdir(exist_ok=True)
     for post in posts:
-        build_post(post, [p for p in posts if p is not post][:3])
+        if is_external(post):
+            build_redirect(post)
+        else:
+            build_post(post, [p for p in posts if p is not post][:3])
     build_index(posts)
     build_sitemap(posts)
     print(f"Built {len(posts)} posts: " + ", ".join(p["slug"] for p in posts))
