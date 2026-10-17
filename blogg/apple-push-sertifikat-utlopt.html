@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apple MDM push-sertifikat utløpt i Intune? Gjør dette | Cloud247</title>
+  <meta name="description" content="Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.">
+  <link rel="canonical" href="https://cloud247.no/blogg/apple-push-sertifikat-utlopt">
+  <meta name="theme-color" content="#061A2F">
+  <meta property="og:title" content="Apple MDM push-sertifikat utløpt i Intune? Gjør dette | Cloud247">
+  <meta property="og:description" content="Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://cloud247.no/blogg/apple-push-sertifikat-utlopt">
+  <meta property="og:site_name" content="Cloud247">
+  <meta property="og:locale" content="nb_NO">
+  <meta name="twitter:card" content="summary">
+  <meta property="article:published_time" content="2026-10-17">
+  <link rel="icon" href="/assets/cloud247-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/styles.css?v=20261017-blogg">
+  <link rel="stylesheet" href="/blogg/blogg.css?v=20261017-blogg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Apple MDM push-sertifikat utløpt i Intune? Gjør dette",
+      "description": "Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.",
+      "datePublished": "2026-10-17",
+      "dateModified": "2026-10-17",
+      "inLanguage": "nb",
+      "url": "https://cloud247.no/blogg/apple-push-sertifikat-utlopt",
+      "mainEntityOfPage": "https://cloud247.no/blogg/apple-push-sertifikat-utlopt",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Cloud Toolbox",
+          "item": "https://cloud247.no/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blogg",
+          "item": "https://cloud247.no/blogg/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Apple MDM push-sertifikat utløpt i Intune? Gjør dette",
+          "item": "https://cloud247.no/blogg/apple-push-sertifikat-utlopt"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/" aria-label="Cloud247">
+        <img src="/assets/cloud247-logo.svg" alt="Cloud247 Technology">
+      </a>
+      <nav class="site-nav" aria-label="Hovedmeny">
+        <a href="/">Verkt&oslash;y</a>
+        <a href="/blogg/" aria-current="false">Blogg</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="blog-hero post-hero">
+      <div class="shell post-shell">
+        <nav class="breadcrumb" aria-label="Br&oslash;dsmuler"><a href="/">Cloud Toolbox</a> <span aria-hidden="true">/</span> <a href="/blogg/">Blogg</a></nav>
+        <h1>Apple MDM push-sertifikat utløpt i Intune? Gjør dette</h1>
+        <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing &middot; Cloud247</p>
+      </div>
+    </section>
+
+    <article class="post-body">
+      <div class="shell post-shell prose">
+<p>Mandag morgen: nye iPhoner kan ikke registreres i Intune, apper rulles ikke ut, og eksisterende iPader ser ut til å ha sluttet å hente nye innstillinger. I Intune står Apple MDM Push-sertifikatet som utløpt.</p>
+<p>Det er en av de vanligste og mest unødvendige driftsstansene i et Microsoft 365-miljø med Apple-enheter. Sertifikatet utløper én gang i året, varselet går ofte til en postkasse ingen følger med på, og den som satte det opp, har kanskje sluttet.</p>
+<p>Her er hva som skjer, hvordan du fikser det, og hvilke andre Apple-tokens du bør holde øye med.</p>
+<h2>Hva Apple MDM Push-sertifikatet gjør</h2>
+<p>For at Intune skal kunne styre iPhone, iPad og Mac, må det kunne gi enhetene beskjed om å sjekke inn. Det skjer via Apple Push Notification service (APNs). Apple MDM Push-sertifikatet er det som gir Intune lov til å bruke APNs for organisasjonen din.</p>
+<p>Ifølge Microsoft kreves sertifikatet for å administrere iOS/iPadOS- og macOS-enheter i Intune, både ved registrering via Company Portal og via Apple Business Manager, Apple School Manager og Apple Configurator.</p>
+<p>Sertifikatet er gyldig i 365 dager og må fornyes hvert år.</p>
+<h2>Hva skjer når sertifikatet utløper</h2>
+<p>Når APNs-sertifikatet er utløpt:</p>
+<ul>
+<li><strong>Nye Apple-enheter kan ikke registreres.</strong> Registreringen feiler, ofte med feilmeldinger som <code>APNSCertificateNotValid</code> eller <code>NoEnrollmentPolicy</code>.</li>
+<li><strong>Eksisterende enheter kan ikke administreres som normalt.</strong> Intune kan ikke varsle enhetene, så nye innstillinger, apper og kommandoer som fjernsletting når ikke frem.</li>
+</ul>
+<p>Enhetene fortsetter å virke for brukeren, men de er i praksis ute av kontroll for IT.</p>
+<h2>Fornyelse eller nytt sertifikat: forskjellen er avgjørende</h2>
+<p>Her ligger den største fellen. Microsoft skiller tydelig mellom å <strong>fornye</strong> sertifikatet og å <strong>erstatte</strong> det:</p>
+<ul>
+<li><strong>Fornyelse</strong> gjøres med den samme Apple-ID-en som opprettet sertifikatet, og du velger det eksisterende sertifikatet i Apple Push Certificates Portal. Enhetene merker ingenting.</li>
+<li><strong>Nytt sertifikat</strong> (med en annen Apple-ID, eller ved å velge «Create a Certificate» i stedet for «Renew») gir et sertifikat med ny identitet. Da må alle iOS/iPadOS-enheter registreres på nytt i Intune.</li>
+</ul>
+<p>Etter at sertifikatet har utløpt, har du ifølge Microsoft 30 dagers frist til å fornye det. Går fristen ut, kan du ikke lenger fornye det samme sertifikatet, og du må re-enrolle enhetene.</p>
+<p>For et firma med 40 iPader på lager og ute hos ansatte, er forskjellen en halvtime med fornyelse eller dager med manuelt arbeid.</p>
+<h2>Slik fornyer du APNs-sertifikatet</h2>
+<ol>
+<li>Logg inn i Microsoft Intune admin center.</li>
+<li>Gå til <strong>Devices</strong> → <strong>Device onboarding</strong> → <strong>Enrollment</strong> og velg fanen <strong>Apple</strong>.</li>
+<li>Velg <strong>Apple MDM Push Certificate</strong>. Her ser du utløpsdatoen og hvilken Apple-ID som ble brukt.</li>
+<li>Last ned CSR-filen med <strong>Download your CSR</strong>.</li>
+<li>Velg <strong>Create your MDM push Certificate</strong> for å åpne Apple Push Certificates Portal, og logg inn med <strong>den samme Apple-ID-en</strong>.</li>
+<li>Finn sertifikatet og velg <strong>Renew</strong>. Ikke velg «Create a Certificate».</li>
+<li>Last opp CSR-filen, last ned det nye sertifikatet (.pem) og last det opp i Intune.</li>
+</ol>
+<p>Fornyelsen er ferdig når sertifikatet vises som aktivt både i Intune og i Apples portal.</p>
+<p><strong>Finner du ikke Apple-ID-en?</strong> Den står i Intune under Apple MDM Push Certificate. Microsoft anbefaler å bruke en Apple-ID knyttet til en felles firmaadresse, for eksempel en distribusjonsliste, ikke en personlig konto. Har eieren sluttet og passordet er borte, må tilgangen til den Apple-ID-en gjenopprettes før du kan fornye.</p>
+<h2>To andre Apple-tokens som også utløper hvert år</h2>
+<p>APNs-sertifikatet er ikke det eneste. Bruker dere Apple Business Manager, har dere sannsynligvis også disse:</p>
+<h3>ADE-token (Automated Device Enrollment)</h3>
+<p>Enrollment program-tokenet kobler Apple Business Manager til Intune, slik at nye enheter registreres automatisk når de slås på første gang. Det må fornyes hvert år, og også hvis passordet til Apple-ID-en som satte det opp endres, eller personen slutter.</p>
+<p>Utløper ADE-tokenet, stopper automatisk registrering av nye enheter. Ifølge Microsoft påvirker en fornyelse ikke enheter som allerede er registrert. Fornyelsen gjøres ved å laste ned tokenet på nytt i Apple Business Manager og laste det opp under <strong>Enrollment program tokens</strong> i Intune. Merk at nedlasting av et nytt token i Apple Business Manager gjør det gamle ugyldig, så fullfør opplastingen med en gang.</p>
+<h3>Apps &amp; Books-token (tidligere VPP)</h3>
+<p>Location-tokenet, som tidligere het VPP-token, brukes til å tildele app-lisenser kjøpt via Apple Business Manager. Hvert token er gyldig i ett år. Utløper det, vises det som ugyldig i Intune, og lisensbaserte apper kan ikke tildeles eller oppdateres som normalt. Fornyelse: last ned tokenet på nytt fra Apple Business Manager under <strong>Apps and Books</strong> og last det opp på det eksisterende tokenet under <strong>Tenant administration</strong> → <strong>Connectors and tokens</strong> → <strong>Apple VPP tokens</strong>.</p>
+<h2>Hvorfor dette går galt så ofte</h2>
+<p>Tre ting går igjen:</p>
+<ol>
+<li><strong>Varselet går til feil person.</strong> Apple sender påminnelser til Apple-ID-en som opprettet sertifikatet. Var det en personlig adresse til en som har sluttet, leser ingen dem.</li>
+<li><strong>Datoene ligger spredt.</strong> APNs-sertifikatet, ADE-tokenet og Apps &amp; Books-tokenet utløper på forskjellige datoer, og ofte kommer Entra app-secrets i tillegg.</li>
+<li><strong>MSP-er har mange kunder.</strong> For en MSP med 20 kundetenanter blir det fort mange datoer å holde styr på, hver med sin egen Apple-ID.</li>
+</ol>
+<h2>Vanlige spørsmål</h2>
+<p><strong>Kan jeg fornye APNs-sertifikatet etter at det har utløpt?</strong><br>
+Ja, innen 30 dager etter utløp, ifølge Microsoft. Etter det må du lage et nytt sertifikat, og enhetene må registreres på nytt.</p>
+<p><strong>Må enhetene registreres på nytt etter fornyelse?</strong><br>
+Nei, ikke hvis du fornyer det eksisterende sertifikatet med samme Apple-ID. Lager du et nytt sertifikat, må alle iOS/iPadOS-enheter registreres på nytt.</p>
+<p><strong>Hvor ser jeg utløpsdatoen?</strong><br>
+I Intune admin center under Devices → Enrollment → Apple → Apple MDM Push Certificate. ADE-tokens står under Enrollment program tokens, og Apps &amp; Books-tokens under Tenant administration → Connectors and tokens.</p>
+<p><strong>Hva hvis jeg ikke vet hvilken Apple-ID som ble brukt?</strong><br>
+Den står i Intune sammen med sertifikatet. Du trenger tilgang til den kontoen for å fornye.</p>
+<h2>Kort oppsummert</h2>
+<ul>
+<li>Apple MDM Push-sertifikatet må fornyes hvert år. Utløper det, kan ikke Intune administrere Apple-enhetene som normalt.</li>
+<li>Forny alltid med samme Apple-ID og det eksisterende sertifikatet. Nytt sertifikat betyr re-enrollment av alle iOS/iPadOS-enheter.</li>
+<li>Du har 30 dager etter utløp til å fornye.</li>
+<li>ADE-tokenet og Apps &amp; Books-tokenet utløper også årlig og bør følges opp på samme måte.</li>
+</ul>
+<aside class="post-cta"><p><strong>Vil du slippe å holde styr på datoene selv?</strong> ExpiryGuard overvåker Apple MDM Push-sertifikater, ADE-tokens, Apps &amp; Books/VPP-tokens og Microsoft Entra app-secrets via Microsoft Graph. Du får nedtelling, fornyelsesplan, arbeidskø og varsler i Teams og på e-post per kunde. Laget for både interne IT-avdelinger og MSP-er. <a href="https://expiry.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=apns-cta-bunn">Prøv ExpiryGuard gratis i 14 dager</a></p></aside>
+
+      </div>
+    </article>
+
+    <section class="related" aria-labelledby="related-title">
+      <div class="shell">
+        <h2 id="related-title">Flere innlegg</h2>
+        <div class="post-grid">
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/noen-sender-e-post-i-ditt-navn">Noen sender e-post fra domenet ditt? Slik stopper du det</a></h3>
+          <p>Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.</p>
+          <a class="post-card-link" href="/blogg/noen-sender-e-post-i-ditt-navn" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/hva-er-mta-sts-og-tls-rpt">Hva er MTA-STS og TLS-RPT? En praktisk forklaring</a></h3>
+          <p>Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce.</p>
+          <a class="post-card-link" href="/blogg/hva-er-mta-sts-og-tls-rpt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 7 min lesing</p>
+          <h3><a href="/blogg/spf-feiler-10-oppslag">SPF permerror: for mange DNS-oppslag – slik retter du det</a></h3>
+          <p>Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.</p>
+          <a class="post-card-link" href="/blogg/spf-feiler-10-oppslag" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <span>&copy; <span id="year"></span> Cloud247</span>
+      <span class="footer-links"><a href="/">Cloud Toolbox</a><a href="/blogg/">Blogg</a></span>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

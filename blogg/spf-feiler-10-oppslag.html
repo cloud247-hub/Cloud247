@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPF permerror: for mange DNS-oppslag – slik retter du det | Cloud247</title>
+  <meta name="description" content="Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.">
+  <link rel="canonical" href="https://cloud247.no/blogg/spf-feiler-10-oppslag">
+  <meta name="theme-color" content="#061A2F">
+  <meta property="og:title" content="SPF permerror: for mange DNS-oppslag – slik retter du det | Cloud247">
+  <meta property="og:description" content="Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://cloud247.no/blogg/spf-feiler-10-oppslag">
+  <meta property="og:site_name" content="Cloud247">
+  <meta property="og:locale" content="nb_NO">
+  <meta name="twitter:card" content="summary">
+  <meta property="article:published_time" content="2026-10-17">
+  <link rel="icon" href="/assets/cloud247-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/styles.css?v=20261017-blogg">
+  <link rel="stylesheet" href="/blogg/blogg.css?v=20261017-blogg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "SPF permerror: for mange DNS-oppslag – slik retter du det",
+      "description": "Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.",
+      "datePublished": "2026-10-17",
+      "dateModified": "2026-10-17",
+      "inLanguage": "nb",
+      "url": "https://cloud247.no/blogg/spf-feiler-10-oppslag",
+      "mainEntityOfPage": "https://cloud247.no/blogg/spf-feiler-10-oppslag",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Cloud Toolbox",
+          "item": "https://cloud247.no/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blogg",
+          "item": "https://cloud247.no/blogg/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SPF permerror: for mange DNS-oppslag – slik retter du det",
+          "item": "https://cloud247.no/blogg/spf-feiler-10-oppslag"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/" aria-label="Cloud247">
+        <img src="/assets/cloud247-logo.svg" alt="Cloud247 Technology">
+      </a>
+      <nav class="site-nav" aria-label="Hovedmeny">
+        <a href="/">Verkt&oslash;y</a>
+        <a href="/blogg/" aria-current="false">Blogg</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="blog-hero post-hero">
+      <div class="shell post-shell">
+        <nav class="breadcrumb" aria-label="Br&oslash;dsmuler"><a href="/">Cloud Toolbox</a> <span aria-hidden="true">/</span> <a href="/blogg/">Blogg</a></nav>
+        <h1>SPF permerror: for mange DNS-oppslag – slik retter du det</h1>
+        <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 7 min lesing &middot; Cloud247</p>
+      </div>
+    </section>
+
+    <article class="post-body">
+      <div class="shell post-shell prose">
+<p>Du har lagt inn SPF for Microsoft 365, så kom nyhetsbrevverktøyet, deretter CRM-systemet, fakturaløsningen og supportsystemet. Alle ba deg legge til «bare én include». Plutselig viser en sjekk <code>permerror</code>, og e-post som før gikk fint, havner i søppelpost eller avvises.</p>
+<p>Årsaken er nesten alltid den samme: SPF-posten krever mer enn 10 DNS-oppslag. Her er hva det betyr, hvilke feil som er vanligst, og hvordan du rydder opp.</p>
+<h2>Hva SPF gjør</h2>
+<p>SPF (Sender Policy Framework) er en TXT-post i DNS som sier hvilke servere som har lov til å sende e-post for domenet ditt. Når en mottakerserver får en e-post fra <code>post@eksempel.no</code>, slår den opp SPF-posten til eksempel.no og sjekker om IP-adressen som leverte e-posten, står på listen.</p>
+<p>En enkel SPF-post for et domene som bare sender via Microsoft 365, ser slik ut:</p>
+<pre><code>v=spf1 include:spf.protection.outlook.com -all
+</code></pre>
+<ul>
+<li><code>v=spf1</code> sier at dette er en SPF-post.</li>
+<li><code>include:spf.protection.outlook.com</code> henter inn Microsofts liste over sendeservere.</li>
+<li><code>-all</code> sier at alle andre skal avvises.</li>
+</ul>
+<h2>Grensen på 10 DNS-oppslag</h2>
+<p>SPF-standarden (RFC 7208) setter en grense: mottakeren skal ikke gjøre mer enn 10 DNS-oppslag for å evaluere SPF-posten. Blir grensen passert, er resultatet <code>permerror</code>, og SPF regnes som feilet.</p>
+<p>Det som teller som oppslag, er mekanismene <code>include</code>, <code>a</code>, <code>mx</code>, <code>ptr</code>, <code>exists</code> og modifikatoren <code>redirect</code>. <code>ip4</code>, <code>ip6</code> og <code>all</code> teller ikke.</p>
+<p>Det som overrasker mange, er at oppslagene i en include også teller. Ta dette eksempelet:</p>
+<pre><code>v=spf1 include:spf.protection.outlook.com include:_spf.nyhetsbrev.example include:mail.crm.example include:spf.faktura.example include:_spf.support.example mx a -all
+</code></pre>
+<p>Det ser ut som sju oppslag. Men hvis <code>_spf.nyhetsbrev.example</code> selv inneholder tre include-er, og CRM-leverandøren har to, er du allerede over grensen. Du ser det ikke i din egen post. Du må følge hele kjeden.</p>
+<p>I tillegg har standarden en grense på to «tomme» oppslag (void lookups), altså oppslag som ikke gir svar. En include som peker på et domene som ikke lenger finnes, kan derfor også gi feil.</p>
+<h2>De vanligste feilene</h2>
+<h3>1. Flere SPF-poster på samme domene</h3>
+<p>Et domene skal ha én TXT-post som begynner med <code>v=spf1</code>. Har du to, for eksempel én fra den gamle e-postleverandøren og én for Microsoft 365, er resultatet <code>permerror</code> uansett hva postene inneholder.</p>
+<p>Feil:</p>
+<pre><code>eksempel.no  TXT  &quot;v=spf1 include:spf.protection.outlook.com -all&quot;
+eksempel.no  TXT  &quot;v=spf1 include:_spf.gammel-leverandor.example ~all&quot;
+</code></pre>
+<p>Riktig er å slå dem sammen til én post, eller fjerne den gamle hvis tjenesten ikke er i bruk.</p>
+<h3>2. Include for alle tjenester, også de som ikke trenger det</h3>
+<p>Mange tjenester sender med sitt eget domene i envelope-from (Return-Path), selv om avsenderen som vises, er ditt domene. Da sjekkes SPF mot deres domene, ikke ditt, og include-en din gjør ingenting annet enn å bruke opp oppslag. Sjekk dokumentasjonen til tjenesten eller headerne i en e-post de har sendt før du legger til en include.</p>
+<h3>3. Gamle tjenester som aldri ble fjernet</h3>
+<p>Byttet dere nyhetsbrevverktøy for to år siden? Ofte står den gamle include-en fortsatt. Gå gjennom listen og spør: sender denne tjenesten faktisk e-post for oss i dag?</p>
+<h3>4. <code>mx</code> og <code>a</code> uten grunn</h3>
+<p><code>mx</code> og <code>a</code> gir mening hvis e-posten sendes fra de samme serverne som tar imot e-post eller er vert for nettsiden. Med Microsoft 365 er det sjelden tilfelle. MX peker til Exchange Online, som allerede dekkes av Microsofts include.</p>
+<h3>5. <code>~all</code> eller <code>-all</code></h3>
+<p><code>~all</code> (softfail) sier «trolig ikke godkjent», mens <code>-all</code> (hardfail) sier «ikke godkjent». Ingen av dem er feil i seg selv. Microsoft bruker <code>-all</code> i sine eksempler. Hvis du har DMARC med <code>p=reject</code> eller <code>p=quarantine</code>, er det DMARC-policyen som avgjør hva som skjer med e-post som feiler, og mange velger da <code>~all</code>. Det viktigste er at posten ikke slutter med <code>+all</code> eller <code>?all</code>. Da betyr SPF i praksis ingenting.</p>
+<h2>Slik retter du SPF-posten</h2>
+<ol>
+<li><strong>Kartlegg hvem som sender.</strong> List opp alle tjenester som sender e-post med domenet ditt: Microsoft 365, nyhetsbrev, CRM, faktura, support, skrivere og nettbutikk. DMARC-rapporter viser dette svart på hvitt, fordi de forteller hvilke IP-adresser som har sendt e-post i ditt navn.</li>
+<li><strong>Tell oppslagene i hele kjeden.</strong> Lim inn domenet i <a href="https://spf.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spf-verktoy-tell">SPF Record Checker</a>. Den følger include og redirect, teller DNS-oppslag og viser løkker og policyproblemer.</li>
+<li><strong>Fjern det som ikke trengs.</strong> Gamle tjenester, <code>mx</code>, <code>a</code> og <code>ptr</code> (som standarden fraråder) går først.</li>
+<li><strong>Flytt tjenester til eget underdomene.</strong> Nyhetsbrev kan ofte sendes fra for eksempel <code>nyhet.eksempel.no</code>, med sin egen SPF-post. Da teller ikke oppslagene mot hoveddomenet.</li>
+<li><strong>Bruk <code>ip4</code>/<code>ip6</code> der det er stabilt.</strong> Har du en egen server med fast IP, for eksempel en skriver som sender skannede dokumenter, er <code>ip4:</code> gratis i oppslagsregnskapet.</li>
+<li><strong>Vær forsiktig med «flatting».</strong> Å erstatte include-er med lange lister av IP-adresser kan få deg under grensen, men leverandørene endrer IP-adressene sine. Da må noen holde listen oppdatert.</li>
+<li><strong>Test på nytt</strong> etter endringen og vent til DNS har oppdatert seg.</li>
+</ol>
+<h2>SPF alene er ikke nok</h2>
+<p>SPF sjekker envelope-from, ikke avsenderen mottakeren ser i e-postprogrammet. Derfor stopper ikke SPF alene forfalskede e-poster. Det er DMARC som kobler SPF og DKIM til avsenderadressen og forteller mottakeren hva som skal skje når sjekken feiler. Les mer i guiden <a href="https://dmarc.cloud247.no/guider/dmarc-i-microsoft-365">DMARC i Microsoft 365</a> og i innlegget om <a href="/blogg/noen-sender-e-post-i-ditt-navn">hva du gjør når noen sender e-post i ditt navn</a>.</p>
+<h2>Vanlige spørsmål</h2>
+<p><strong>Hvilken SPF-post trenger jeg for Microsoft 365?</strong><br>
+Sender du bare via Microsoft 365, holder det med <code>v=spf1 include:spf.protection.outlook.com -all</code>. Andre tjenester som sender med ditt domene i envelope-from, må legges til.</p>
+<p><strong>Teller <code>ip4</code> og <code>ip6</code> mot grensen på 10?</strong><br>
+Nei. Bare <code>include</code>, <code>a</code>, <code>mx</code>, <code>ptr</code>, <code>exists</code> og <code>redirect</code> gir DNS-oppslag.</p>
+<p><strong>Kan jeg ha to SPF-poster, én per tjeneste?</strong><br>
+Nei. To TXT-poster som begynner med <code>v=spf1</code> på samme navn gir <code>permerror</code>. Slå dem sammen til én.</p>
+<p><strong>Påvirker SPF-feil DMARC?</strong><br>
+Ja. DMARC godtar e-posten hvis SPF eller DKIM passerer og samsvarer med avsenderdomenet. Feiler SPF, står DKIM alene. Feiler begge, slår DMARC-policyen inn.</p>
+<h2>Kort oppsummert</h2>
+<ul>
+<li>SPF-posten kan maks kreve 10 DNS-oppslag, inkludert alt som ligger i include-ene.</li>
+<li>Vanligste feil: flere SPF-poster, gamle tjenester, unødvendige include-er og <code>mx</code>/<code>a</code> uten grunn.</li>
+<li>Kartlegg hvem som sender, tell oppslagene med <a href="https://spf.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spf-verktoy-oppsummering">SPF Record Checker</a>, og rydd.</li>
+<li>SPF må kombineres med DKIM og DMARC for å stoppe forfalskning.</li>
+</ul>
+<aside class="post-cta"><p><strong>Vil du se hvem som faktisk sender e-post i ditt navn?</strong> Cloud247 DMARC gjør DMARC-rapportene om til en oversikt, slik at du ser hvilke tjenester som feiler SPF før du strammer inn. Det krever bare én DNS-endring. <a href="https://dmarc.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spf-cta-bunn">Prøv Cloud247 DMARC gratis i 14 dager</a></p></aside>
+
+      </div>
+    </article>
+
+    <section class="related" aria-labelledby="related-title">
+      <div class="shell">
+        <h2 id="related-title">Flere innlegg</h2>
+        <div class="post-grid">
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/noen-sender-e-post-i-ditt-navn">Noen sender e-post fra domenet ditt? Slik stopper du det</a></h3>
+          <p>Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.</p>
+          <a class="post-card-link" href="/blogg/noen-sender-e-post-i-ditt-navn" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/hva-er-mta-sts-og-tls-rpt">Hva er MTA-STS og TLS-RPT? En praktisk forklaring</a></h3>
+          <p>Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce.</p>
+          <a class="post-card-link" href="/blogg/hva-er-mta-sts-og-tls-rpt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/apple-push-sertifikat-utlopt">Apple MDM push-sertifikat utløpt i Intune? Gjør dette</a></h3>
+          <p>Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.</p>
+          <a class="post-card-link" href="/blogg/apple-push-sertifikat-utlopt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <span>&copy; <span id="year"></span> Cloud247</span>
+      <span class="footer-links"><a href="/">Cloud Toolbox</a><a href="/blogg/">Blogg</a></span>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

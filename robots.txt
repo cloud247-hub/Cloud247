@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /blogg-kilde/
+Disallow: /scripts/
 
 Sitemap: https://cloud247.no/sitemap.xml

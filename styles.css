@@ -531,3 +531,34 @@ a { color: inherit; }
     margin: 0;
   }
 }
+
+/* Navigation links (blog link on the front page, menu on the blog pages) */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.site-nav a,
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: #dbe3ec;
+  font-size: .88rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background .18s ease, color .18s ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible,
+.nav-link:hover,
+.nav-link:focus-visible { color: #fff; background: rgba(255,255,255,.08); }
+
+.site-nav a[aria-current="page"] { color: var(--navy); background: var(--yellow); }
+
+.footer-links { display: inline-flex; gap: 18px; }
+
+@media (max-width: 600px) {
+  .site-nav { justify-content: center; }
+}

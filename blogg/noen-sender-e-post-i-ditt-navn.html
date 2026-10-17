@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noen sender e-post fra domenet ditt? Slik stopper du det | Cloud247</title>
+  <meta name="description" content="Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.">
+  <link rel="canonical" href="https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn">
+  <meta name="theme-color" content="#061A2F">
+  <meta property="og:title" content="Noen sender e-post fra domenet ditt? Slik stopper du det | Cloud247">
+  <meta property="og:description" content="Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn">
+  <meta property="og:site_name" content="Cloud247">
+  <meta property="og:locale" content="nb_NO">
+  <meta name="twitter:card" content="summary">
+  <meta property="article:published_time" content="2026-10-17">
+  <link rel="icon" href="/assets/cloud247-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/styles.css?v=20261017-blogg">
+  <link rel="stylesheet" href="/blogg/blogg.css?v=20261017-blogg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Noen sender e-post fra domenet ditt? Slik stopper du det",
+      "description": "Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.",
+      "datePublished": "2026-10-17",
+      "dateModified": "2026-10-17",
+      "inLanguage": "nb",
+      "url": "https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn",
+      "mainEntityOfPage": "https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cloud247.no/#organization",
+        "name": "Cloud247",
+        "url": "https://cloud247.no/",
+        "logo": "https://cloud247.no/assets/cloud247-logo.svg"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Cloud Toolbox",
+          "item": "https://cloud247.no/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blogg",
+          "item": "https://cloud247.no/blogg/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Noen sender e-post fra domenet ditt? Slik stopper du det",
+          "item": "https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/" aria-label="Cloud247">
+        <img src="/assets/cloud247-logo.svg" alt="Cloud247 Technology">
+      </a>
+      <nav class="site-nav" aria-label="Hovedmeny">
+        <a href="/">Verkt&oslash;y</a>
+        <a href="/blogg/" aria-current="false">Blogg</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="blog-hero post-hero">
+      <div class="shell post-shell">
+        <nav class="breadcrumb" aria-label="Br&oslash;dsmuler"><a href="/">Cloud Toolbox</a> <span aria-hidden="true">/</span> <a href="/blogg/">Blogg</a></nav>
+        <h1>Noen sender e-post fra domenet ditt? Slik stopper du det</h1>
+        <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing &middot; Cloud247</p>
+      </div>
+    </section>
+
+    <article class="post-body">
+      <div class="shell post-shell prose">
+<p>En kunde ringer og spør om fakturaen dere sendte i går, den med nytt kontonummer. Dere har ikke sendt noen faktura. E-posten kom tilsynelatende fra <code>faktura@eksempel.no</code>, med logoen deres og riktig signatur.</p>
+<p>Det er e-postforfalskning (spoofing), og det er overraskende enkelt å få til hvis domenet ikke er beskyttet. Her er hvordan det skjer, hvordan du sjekker ditt eget domene, og hva som faktisk stopper det.</p>
+<h2>Hvordan e-postforfalskning skjer</h2>
+<p>E-post ble laget uten innebygd kontroll av hvem som er avsender. Avsenderen som vises i e-postprogrammet («From»), er bare et tekstfelt som den som sender, fyller ut selv. Hvem som helst med en e-postserver kan skrive <code>faktura@eksempel.no</code> der.</p>
+<p>Det finnes tre varianter du bør kjenne til:</p>
+<ol>
+<li><strong>Direkte forfalskning av domenet ditt.</strong> Avsenderen er nøyaktig ditt domene, <code>eksempel.no</code>. Dette er det SPF, DKIM og DMARC er laget for å stoppe.</li>
+<li><strong>Lignende domener.</strong> Avsenderen bruker <code>eksempel-no.com</code> eller <code>eksernpel.no</code> (rn i stedet for m). DMARC på ditt domene hjelper ikke her, fordi det er et annet domene. Her må du være oppmerksom og lære opp brukerne.</li>
+<li><strong>Kaprede kontoer.</strong> Noen har fått tak i passordet til en ekte postkasse og sender fra den. E-posten passerer alle sjekker fordi den faktisk kommer fra dere. Her hjelper flerfaktorautentisering og innloggingsovervåking, ikke DNS-poster.</li>
+</ol>
+<p>Resten av innlegget handler om den første varianten, fordi den kan du lukke helt.</p>
+<h2>De tre sjekkene: SPF, DKIM og DMARC</h2>
+<p><strong>SPF</strong> er en DNS-post som lister hvilke servere som har lov til å sende for domenet ditt. Svakheten er at SPF sjekker envelope-from (Return-Path), ikke avsenderen mottakeren ser. Les mer i innlegget om <a href="/blogg/spf-feiler-10-oppslag">SPF og grensen på 10 DNS-oppslag</a>.</p>
+<p><strong>DKIM</strong> er en digital signatur som legges på hver e-post. Mottakeren henter den offentlige nøkkelen fra DNS og sjekker at e-posten ikke er endret og er signert av domenet. I Microsoft 365 skrus DKIM på i Microsoft Defender-portalen, med to CNAME-poster (<code>selector1._domainkey</code> og <code>selector2._domainkey</code>).</p>
+<p><strong>DMARC</strong> binder det sammen. DMARC krever at SPF eller DKIM ikke bare passerer, men også samsvarer med domenet i From-feltet. Og DMARC forteller mottakeren hva som skal skje når sjekken feiler:</p>
+<pre><code>_dmarc.eksempel.no  TXT  &quot;v=DMARC1; p=reject; rua=mailto:dmarc@eksempel.no&quot;
+</code></pre>
+<h2>Slik sjekker du ditt eget domene</h2>
+<p>Begynn med en rask sjekk utenfra:</p>
+<ul>
+<li><a href="https://mailscore.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spoofing-mailscore">Mail Secure Score</a> gir en samlet vurdering av e-postsikkerheten på domenet.</li>
+<li><a href="https://domainguard.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spoofing-domainguard">DomainGuard</a> sjekker DNSSEC, MX, SPF, DKIM, DMARC og flere viktige domeneinnstillinger, og gir forslag når noe mangler.</li>
+</ul>
+<p>Se særlig etter dette:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Funn</th>
+<th>Hva det betyr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingen DMARC-post</td>
+<td>Mottakere har ingen instruks. Forfalskede e-poster vurderes bare av mottakerens eget filter.</td>
+</tr>
+<tr>
+<td><code>p=none</code></td>
+<td>Du får rapporter, men ingenting blir stoppet.</td>
+</tr>
+<tr>
+<td>SPF slutter med <code>+all</code> eller <code>?all</code></td>
+<td>SPF godkjenner i praksis alle avsendere.</td>
+</tr>
+<tr>
+<td>DKIM ikke aktivert</td>
+<td>Bare SPF kan gi DMARC-pass, og SPF brytes ofte ved videresending.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Har du fått en mistenkelig e-post, kan du også se i headerne. Se etter <code>Authentication-Results</code>. Der står det <code>spf=</code>, <code>dkim=</code> og <code>dmarc=</code> med resultatet <code>pass</code> eller <code>fail</code>.</p>
+<h2>Hvorfor p=none ikke stopper noe</h2>
+<p>Mange har lagt inn DMARC og tror domenet er beskyttet. Men en DMARC-post med <code>p=none</code> betyr: «Send meg rapporter, men ikke gjør noe med e-post som feiler.» En forfalsket faktura fra <code>faktura@eksempel.no</code> blir levert akkurat som før, med mindre mottakerens eget spamfilter tilfeldigvis stopper den.</p>
+<p><code>p=none</code> er riktig som første steg, for rapportene viser hvem som sender e-post i ditt navn. Men det er bare starten. Det som faktisk beskytter, er:</p>
+<ul>
+<li><code>p=quarantine</code>: e-post som feiler, legges i søppelpost.</li>
+<li><code>p=reject</code>: e-post som feiler, avvises.</li>
+</ul>
+<p>Grunnen til at mange blir stående på <code>p=none</code>, er frykten for å stoppe egen, legitim e-post. Nyhetsbrevverktøyet, fakturasystemet eller CRM-et kan sende uten riktig SPF eller DKIM. Går du rett til <code>p=reject</code>, kan de e-postene forsvinne.</p>
+<h2>Veien fra p=none til p=reject</h2>
+<ol>
+<li><strong>Legg inn DMARC med <code>p=none</code> og en rapportadresse (<code>rua</code>).</strong> Da begynner mottakere som Microsoft, Google og Yahoo å sende daglige rapporter.</li>
+<li><strong>Les rapportene.</strong> De er XML-filer som er tunge å lese manuelt. Se etter hvilke IP-adresser og tjenester som sender, og om de passerer SPF og DKIM med samsvar.</li>
+<li><strong>Rett opp legitime avsendere.</strong> Slå på DKIM for hver tjeneste som støtter det, og rydd i SPF.</li>
+<li><strong>Gå til <code>p=quarantine</code>,</strong> gjerne med <code>pct</code> for en gradvis overgang, og følg med på rapportene.</li>
+<li><strong>Gå til <code>p=reject</code></strong> når rapportene viser at all legitim e-post passerer.</li>
+</ol>
+<p>Hele prosessen med eksempler står i guiden <a href="https://dmarc.cloud247.no/guider/fra-p-none-til-p-reject">Fra p=none til p=reject</a>. Bruker dere Microsoft 365, se også <a href="https://dmarc.cloud247.no/guider/dmarc-i-microsoft-365">DMARC i Microsoft 365</a>.</p>
+<h2>Vanlige spørsmål</h2>
+<p><strong>Kan noen sende e-post fra domenet mitt selv om jeg har SPF?</strong><br>
+Ja. SPF sjekker envelope-from, ikke avsenderen mottakeren ser. Uten DMARC med <code>p=quarantine</code> eller <code>p=reject</code> kan From-feltet fortsatt forfalskes.</p>
+<p><strong>Hvorfor får jeg retur av e-post jeg aldri har sendt?</strong><br>
+Noen har trolig sendt forfalsket e-post med ditt domene som avsender, og mottakerservere sender returmeldinger tilbake til adressen. Det er et tegn på at domenet ditt brukes, og at du bør sjekke DMARC-policyen.</p>
+<p><strong>Hjelper DMARC mot lignende domener som eksempel-no.com?</strong><br>
+Nei. DMARC beskytter bare ditt eget domene. Lignende domener må oppdages på andre måter, og brukerne bør lære å se etter dem.</p>
+<p><strong>Hvor lang tid tar det å komme til p=reject?</strong><br>
+Det kommer an på hvor mange tjenester som sender e-post for dere. Rapportene viser når all legitim e-post passerer, og det er der du bør vente på.</p>
+<h2>Kort oppsummert</h2>
+<ul>
+<li>From-feltet i e-post kan forfalskes, med mindre domenet er beskyttet med DMARC.</li>
+<li>SPF og DKIM er byggesteinene. DMARC kobler dem til avsenderadressen og sier hva som skal skje.</li>
+<li><code>p=none</code> gir rapporter, men stopper ingenting. Målet er <code>p=reject</code>.</li>
+<li>Sjekk domenet ditt med <a href="https://mailscore.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spoofing-mailscore-oppsummering">Mail Secure Score</a> eller <a href="https://domainguard.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spoofing-domainguard-oppsummering">DomainGuard</a>.</li>
+</ul>
+<aside class="post-cta"><p><strong>Klar for å komme deg fra p=none?</strong> Cloud247 DMARC gjør DMARC- og TLS-rapportene om til en oversikt over hvem som sender i ditt navn, og gir deg en trygg vei fra p=none til reject. Varsler kommer i Teams, data lagres i EU, og oppsettet er én DNS-endring. <a href="https://dmarc.cloud247.no/?utm_source=blogg&amp;utm_medium=blog&amp;utm_campaign=uke43-blogg&amp;utm_content=spoofing-cta-bunn">Prøv Cloud247 DMARC gratis i 14 dager</a></p></aside>
+
+      </div>
+    </article>
+
+    <section class="related" aria-labelledby="related-title">
+      <div class="shell">
+        <h2 id="related-title">Flere innlegg</h2>
+        <div class="post-grid">
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/hva-er-mta-sts-og-tls-rpt">Hva er MTA-STS og TLS-RPT? En praktisk forklaring</a></h3>
+          <p>Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce.</p>
+          <a class="post-card-link" href="/blogg/hva-er-mta-sts-og-tls-rpt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/apple-push-sertifikat-utlopt">Apple MDM push-sertifikat utløpt i Intune? Gjør dette</a></h3>
+          <p>Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.</p>
+          <a class="post-card-link" href="/blogg/apple-push-sertifikat-utlopt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        <article class="post-card">
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 7 min lesing</p>
+          <h3><a href="/blogg/spf-feiler-10-oppslag">SPF permerror: for mange DNS-oppslag – slik retter du det</a></h3>
+          <p>Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.</p>
+          <a class="post-card-link" href="/blogg/spf-feiler-10-oppslag" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+        </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <span>&copy; <span id="year"></span> Cloud247</span>
+      <span class="footer-links"><a href="/">Cloud Toolbox</a><a href="/blogg/">Blogg</a></span>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
