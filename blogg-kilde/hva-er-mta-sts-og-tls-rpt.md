@@ -1,5 +1,6 @@
 ---
 tittel: "Hva er MTA-STS og TLS-RPT? En praktisk forklaring"
+publisert: "2026-10-03"
 metabeskrivelse: "Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce."
 målsøk:
   - "hva er MTA-STS"

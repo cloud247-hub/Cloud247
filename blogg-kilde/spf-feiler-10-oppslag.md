@@ -1,5 +1,6 @@
 ---
 tittel: "SPF permerror: for mange DNS-oppslag – slik retter du det"
+publisert: "2026-09-19"
 metabeskrivelse: "Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem."
 målsøk:
   - "SPF permerror for mange DNS-oppslag"

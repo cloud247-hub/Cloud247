@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="Cloud247">
   <meta property="og:locale" content="nb_NO">
   <meta name="twitter:card" content="summary">
-  <meta property="article:published_time" content="2026-10-17">
+  <meta property="article:published_time" content="2026-10-03">
   <link rel="icon" href="/assets/cloud247-mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css?v=20261017-blogg">
@@ -27,8 +27,8 @@
       "@type": "BlogPosting",
       "headline": "Hva er MTA-STS og TLS-RPT? En praktisk forklaring",
       "description": "Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce.",
-      "datePublished": "2026-10-17",
-      "dateModified": "2026-10-17",
+      "datePublished": "2026-10-03",
+      "dateModified": "2026-10-03",
       "inLanguage": "nb",
       "url": "https://cloud247.no/blogg/hva-er-mta-sts-og-tls-rpt",
       "mainEntityOfPage": "https://cloud247.no/blogg/hva-er-mta-sts-og-tls-rpt",
@@ -92,7 +92,7 @@
       <div class="shell post-shell">
         <nav class="breadcrumb" aria-label="Br&oslash;dsmuler"><a href="/">Cloud Toolbox</a> <span aria-hidden="true">/</span> <a href="/blogg/">Blogg</a></nav>
         <h1>Hva er MTA-STS og TLS-RPT? En praktisk forklaring</h1>
-        <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing &middot; Cloud247</p>
+        <p class="post-meta"><time datetime="2026-10-03">3. oktober 2026</time> &middot; 6 min lesing &middot; Cloud247</p>
       </div>
     </section>
 
@@ -108,14 +108,12 @@
 <p>MTA-STS består av to deler.</p>
 <h3>1. Policyfilen</h3>
 <p>En tekstfil som ligger på HTTPS på en fast adresse:</p>
-<pre><code>https://mta-sts.eksempel.no/.well-known/mta-sts.txt
-</code></pre>
+<pre class="highlight"><code>https://mta-sts.eksempel.no/.well-known/mta-sts.txt</code></pre>
 <p>Innholdet ser slik ut for et domene som bruker Microsoft 365:</p>
-<pre><code>version: STSv1
+<pre class="highlight"><code>version: STSv1
 mode: testing
 mx: *.mail.protection.outlook.com
-max_age: 86400
-</code></pre>
+max_age: 86400</code></pre>
 <ul>
 <li><code>version</code> er alltid <code>STSv1</code>.</li>
 <li><code>mode</code> er <code>testing</code>, <code>enforce</code> eller <code>none</code>.</li>
@@ -125,16 +123,14 @@ max_age: 86400
 <p>Filen må leveres over HTTPS med gyldig sertifikat for <code>mta-sts.eksempel.no</code>.</p>
 <h3>2. TXT-posten <code>_mta-sts</code></h3>
 <p>En DNS-post som forteller at policyen finnes, og hvilken versjon den har:</p>
-<pre><code>_mta-sts.eksempel.no  TXT  &quot;v=STSv1; id=20261017T1200&quot;
-</code></pre>
+<pre class="highlight"><code>_mta-sts.eksempel.no  TXT  "v=STSv1; id=20261017T1200"</code></pre>
 <p><code>id</code> er en fri tekst (bokstaver og tall) som må endres hver gang du endrer policyfilen. Det er slik avsenderne vet at de skal hente policyen på nytt. Mange bruker dato og klokkeslett. Glemmer du å endre <code>id</code>, kan avsendere fortsette å bruke den gamle policyen til <code>max_age</code> går ut.</p>
 <h2>Testing før enforce</h2>
 <p>Begynn alltid med <code>mode: testing</code>. Da følger avsenderne ikke policyen strengt, men de rapporterer hvis levering ville ha feilet. Det er her TLS-RPT kommer inn.</p>
 <p>Gå til <code>mode: enforce</code> først når rapportene viser at alt fungerer. Husk å endre <code>id</code> i TXT-posten samtidig. Når du er sikker på at oppsettet er stabilt, kan du øke <code>max_age</code>, for eksempel til en uke eller mer.</p>
 <h2>Hva TLS-RPT gjør</h2>
 <p>TLS-RPT (SMTP TLS Reporting, RFC 8460) gir deg rapporter fra avsenderne om hvordan TLS-leveringen til domenet ditt gikk: hvor mange forbindelser som lyktes, og hvilke som feilet og hvorfor. Det settes opp med én TXT-post:</p>
-<pre><code>_smtp._tls.eksempel.no  TXT  &quot;v=TLSRPTv1; rua=mailto:tlsrpt@eksempel.no&quot;
-</code></pre>
+<pre class="highlight"><code>_smtp._tls.eksempel.no  TXT  "v=TLSRPTv1; rua=mailto:tlsrpt@eksempel.no"</code></pre>
 <p>Rapportene kommer som JSON-filer, vanligvis daglig. De viser feil som:</p>
 <ul>
 <li>sertifikatet passer ikke til vertsnavnet</li>
@@ -179,22 +175,22 @@ Ja. Du får rapporter om TLS-feil uansett, og det er et fornuftig første steg f
         <h2 id="related-title">Flere innlegg</h2>
         <div class="post-grid">
         <article class="post-card">
-          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
-          <h3><a href="/blogg/noen-sender-e-post-i-ditt-navn">Noen sender e-post fra domenet ditt? Slik stopper du det</a></h3>
-          <p>Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.</p>
-          <a class="post-card-link" href="/blogg/noen-sender-e-post-i-ditt-navn" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 12 min lesing</p>
+          <h3><a href="/blogg/dane-i-microsoft-365">Slik setter du opp DANE i Microsoft 365 (Exchange Online)</a></h3>
+          <p>Steg for steg: slå på innkommende SMTP DANE med DNSSEC i Exchange Online med PowerShell, sjekk at det virker og rull tilbake trygt.</p>
+          <a class="post-card-link" href="/blogg/dane-i-microsoft-365" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
         </article>
         <article class="post-card">
-          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <p class="post-meta"><time datetime="2026-10-10">10. oktober 2026</time> &middot; 6 min lesing</p>
           <h3><a href="/blogg/apple-push-sertifikat-utlopt">Apple MDM push-sertifikat utløpt i Intune? Gjør dette</a></h3>
           <p>Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.</p>
           <a class="post-card-link" href="/blogg/apple-push-sertifikat-utlopt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
         </article>
         <article class="post-card">
-          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 7 min lesing</p>
-          <h3><a href="/blogg/spf-feiler-10-oppslag">SPF permerror: for mange DNS-oppslag – slik retter du det</a></h3>
-          <p>Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.</p>
-          <a class="post-card-link" href="/blogg/spf-feiler-10-oppslag" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+          <p class="post-meta"><time datetime="2026-09-26">26. september 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/noen-sender-e-post-i-ditt-navn">Noen sender e-post fra domenet ditt? Slik stopper du det</a></h3>
+          <p>Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.</p>
+          <a class="post-card-link" href="/blogg/noen-sender-e-post-i-ditt-navn" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
         </article>
         </div>
       </div>

@@ -66,6 +66,10 @@
 
 .post-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 
+.post-card.is-featured { grid-column: 1 / -1; }
+.post-card.is-featured h2 { font-size: 1.7rem; }
+.post-card.is-featured p:not(.post-meta) { max-width: 760px; }
+
 .post-card .post-meta { margin: 0 0 10px; color: #876800; }
 
 .post-card h2,
@@ -194,6 +198,8 @@
 }
 
 .post-cta p { margin: 0; }
+.post-cta p + p { margin-top: .8em; }
+.post-cta h2 { margin: 0 0 .4em; font-size: 1.35rem; }
 
 .post-cta a {
   display: table;

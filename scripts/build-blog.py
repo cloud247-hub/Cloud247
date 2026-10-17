@@ -10,7 +10,7 @@ Each source file starts with a small front matter block:
     foreslått_url: "cloud247.no/blogg/<slug>"
     ---
 
-Usage:  pip install markdown && python3 scripts/build-blog.py
+Usage:  pip install markdown pymdown-extensions && python3 scripts/build-blog.py
 Writes blogg/<slug>.html (served as /blogg/<slug>), blogg/index.html and sitemap.xml.
 """
 
@@ -29,14 +29,6 @@ OUT = ROOT / "blogg"
 SITE = "https://cloud247.no"
 DEFAULT_DATE = "2026-10-17"
 ASSET_VERSION = "20261017-blogg"
-
-# Order on the blog index (newest first). Posts not listed here are appended.
-ORDER = [
-    "noen-sender-e-post-i-ditt-navn",
-    "hva-er-mta-sts-og-tls-rpt",
-    "apple-push-sertifikat-utlopt",
-    "spf-feiler-10-oppslag",
-]
 
 MONTHS = ["januar", "februar", "mars", "april", "mai", "juni", "juli",
           "august", "september", "oktober", "november", "desember"]
@@ -64,11 +56,19 @@ def esc(value):
 
 
 def render_body(md_text):
-    # The first H1 is shown in the page hero, not in the body
-    md_text = re.sub(r"^# .*\n+", "", md_text, count=1, flags=re.M)
-    body = markdown.markdown(md_text, extensions=["tables", "fenced_code", "sane_lists"])
+    # The page hero shows the title: drop the first H1 and anything above it (e.g. a breadcrumb line)
+    h1 = re.search(r"^# .*\n+", md_text, flags=re.M)
+    if h1:
+        md_text = md_text[h1.end():]
+    # Notes in HTML comments (sources, reminders) stay in the Markdown only
+    md_text = re.sub(r"<!--.*?-->", "", md_text, flags=re.S)
+    # List items indented with three spaces ("1. ") need four for Python-Markdown
+    md_text = re.sub(r"^   (?! )", "    ", md_text, flags=re.M)
+    body = markdown.markdown(md_text, extensions=["tables", "pymdownx.superfences", "sane_lists"])
     # Keep links to our own blog relative, so they work on any host
     body = body.replace(f'href="{SITE}/blogg/', 'href="/blogg/')
+    # Relative guide links in posts written for the DMARC site point there
+    body = body.replace('href="/guider/', 'href="https://dmarc.cloud247.no/guider/')
     # Wide tables scroll sideways on phones instead of stretching the page
     body = body.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
     # FAQ entries ("**Question?**" followed by the answer) get the answer on its own line
@@ -79,6 +79,10 @@ def render_body(md_text):
     if re.match(r"<p><strong>(?:(?!</strong>).)*\?</strong>", last) and last.rstrip().endswith("</p>"):
         last = re.sub(r"</a>\.</p>$", "</a></p>", last.rstrip())  # no stray full stop after the button
         body = body[:start] + f'<aside class="post-cta">{last}</aside>\n'
+    # ...or a closing section ("## Heading", text, and a paragraph with just the link)
+    elif re.fullmatch(r"<p><a [^>]+>[^<]+</a></p>", last.strip()):
+        section = body.rfind("<h2")
+        body = body[:section] + f'<aside class="post-cta">{body[section:].rstrip()}</aside>\n'
     return body
 
 
@@ -154,13 +158,14 @@ def load_posts():
             "published": meta.get("publisert", DEFAULT_DATE),
             "md": md_text,
         })
-    rank = {slug: i for i, slug in enumerate(ORDER)}
-    posts.sort(key=lambda p: (rank.get(p["slug"], len(ORDER)), p["slug"]))
+    # Newest first
+    posts.sort(key=lambda p: (p["published"], p["slug"]), reverse=True)
     return posts
 
 
-def post_card(post, heading="h2"):
-    return f"""        <article class="post-card">
+def post_card(post, heading="h2", featured=False):
+    css = "post-card is-featured" if featured else "post-card"
+    return f"""        <article class="{css}">
           <p class="post-meta"><time datetime="{post['published']}">{norsk_dato(post['published'])}</time> &middot; {read_minutes(post['md'])} min lesing</p>
           <{heading}><a href="/blogg/{post['slug']}">{esc(post['title'])}</a></{heading}>
           <p>{esc(post['description'])}</p>
@@ -224,7 +229,8 @@ def build_index(posts):
           "description": description, "inLanguage": "nb", "publisher": ORG,
           "blogPost": [{"@type": "BlogPosting", "headline": p["title"], "url": f"{SITE}/blogg/{p['slug']}",
                         "datePublished": p["published"]} for p in posts]}
-    cards = "\n".join(post_card(p) for p in posts)
+    # With an odd number of posts the newest one spans both columns, so the grid has no gap
+    cards = "\n".join(post_card(p, featured=(i == 0 and len(posts) % 2 == 1)) for i, p in enumerate(posts))
     page = f"""{head('Blogg | Cloud247', description, url, 'website', ld)}
 <body>
 {header().replace('{current}', 'page')}

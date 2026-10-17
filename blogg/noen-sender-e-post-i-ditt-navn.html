@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="Cloud247">
   <meta property="og:locale" content="nb_NO">
   <meta name="twitter:card" content="summary">
-  <meta property="article:published_time" content="2026-10-17">
+  <meta property="article:published_time" content="2026-09-26">
   <link rel="icon" href="/assets/cloud247-mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/styles.css?v=20261017-blogg">
@@ -27,8 +27,8 @@
       "@type": "BlogPosting",
       "headline": "Noen sender e-post fra domenet ditt? Slik stopper du det",
       "description": "Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe.",
-      "datePublished": "2026-10-17",
-      "dateModified": "2026-10-17",
+      "datePublished": "2026-09-26",
+      "dateModified": "2026-09-26",
       "inLanguage": "nb",
       "url": "https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn",
       "mainEntityOfPage": "https://cloud247.no/blogg/noen-sender-e-post-i-ditt-navn",
@@ -92,7 +92,7 @@
       <div class="shell post-shell">
         <nav class="breadcrumb" aria-label="Br&oslash;dsmuler"><a href="/">Cloud Toolbox</a> <span aria-hidden="true">/</span> <a href="/blogg/">Blogg</a></nav>
         <h1>Noen sender e-post fra domenet ditt? Slik stopper du det</h1>
-        <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing &middot; Cloud247</p>
+        <p class="post-meta"><time datetime="2026-09-26">26. september 2026</time> &middot; 6 min lesing &middot; Cloud247</p>
       </div>
     </section>
 
@@ -113,8 +113,7 @@
 <p><strong>SPF</strong> er en DNS-post som lister hvilke servere som har lov til å sende for domenet ditt. Svakheten er at SPF sjekker envelope-from (Return-Path), ikke avsenderen mottakeren ser. Les mer i innlegget om <a href="/blogg/spf-feiler-10-oppslag">SPF og grensen på 10 DNS-oppslag</a>.</p>
 <p><strong>DKIM</strong> er en digital signatur som legges på hver e-post. Mottakeren henter den offentlige nøkkelen fra DNS og sjekker at e-posten ikke er endret og er signert av domenet. I Microsoft 365 skrus DKIM på i Microsoft Defender-portalen, med to CNAME-poster (<code>selector1._domainkey</code> og <code>selector2._domainkey</code>).</p>
 <p><strong>DMARC</strong> binder det sammen. DMARC krever at SPF eller DKIM ikke bare passerer, men også samsvarer med domenet i From-feltet. Og DMARC forteller mottakeren hva som skal skje når sjekken feiler:</p>
-<pre><code>_dmarc.eksempel.no  TXT  &quot;v=DMARC1; p=reject; rua=mailto:dmarc@eksempel.no&quot;
-</code></pre>
+<pre class="highlight"><code>_dmarc.eksempel.no  TXT  "v=DMARC1; p=reject; rua=mailto:dmarc@eksempel.no"</code></pre>
 <h2>Slik sjekker du ditt eget domene</h2>
 <p>Begynn med en rask sjekk utenfra:</p>
 <ul>
@@ -192,22 +191,22 @@ Det kommer an på hvor mange tjenester som sender e-post for dere. Rapportene vi
         <h2 id="related-title">Flere innlegg</h2>
         <div class="post-grid">
         <article class="post-card">
-          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
-          <h3><a href="/blogg/hva-er-mta-sts-og-tls-rpt">Hva er MTA-STS og TLS-RPT? En praktisk forklaring</a></h3>
-          <p>Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce.</p>
-          <a class="post-card-link" href="/blogg/hva-er-mta-sts-og-tls-rpt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 12 min lesing</p>
+          <h3><a href="/blogg/dane-i-microsoft-365">Slik setter du opp DANE i Microsoft 365 (Exchange Online)</a></h3>
+          <p>Steg for steg: slå på innkommende SMTP DANE med DNSSEC i Exchange Online med PowerShell, sjekk at det virker og rull tilbake trygt.</p>
+          <a class="post-card-link" href="/blogg/dane-i-microsoft-365" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
         </article>
         <article class="post-card">
-          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 6 min lesing</p>
+          <p class="post-meta"><time datetime="2026-10-10">10. oktober 2026</time> &middot; 6 min lesing</p>
           <h3><a href="/blogg/apple-push-sertifikat-utlopt">Apple MDM push-sertifikat utløpt i Intune? Gjør dette</a></h3>
           <p>Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år.</p>
           <a class="post-card-link" href="/blogg/apple-push-sertifikat-utlopt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
         </article>
         <article class="post-card">
-          <p class="post-meta"><time datetime="2026-10-17">17. oktober 2026</time> &middot; 7 min lesing</p>
-          <h3><a href="/blogg/spf-feiler-10-oppslag">SPF permerror: for mange DNS-oppslag – slik retter du det</a></h3>
-          <p>Får du SPF permerror? Slik fungerer grensen på 10 DNS-oppslag, de vanligste feilene i SPF-posten for Microsoft 365, og hvordan du retter dem.</p>
-          <a class="post-card-link" href="/blogg/spf-feiler-10-oppslag" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
+          <p class="post-meta"><time datetime="2026-10-03">3. oktober 2026</time> &middot; 6 min lesing</p>
+          <h3><a href="/blogg/hva-er-mta-sts-og-tls-rpt">Hva er MTA-STS og TLS-RPT? En praktisk forklaring</a></h3>
+          <p>Hva er MTA-STS, og hvorfor trenger du TLS-RPT? Slik setter du opp policyfilen og _mta-sts-posten, og går trygt fra testing til enforce.</p>
+          <a class="post-card-link" href="/blogg/hva-er-mta-sts-og-tls-rpt" aria-hidden="true" tabindex="-1">Les innlegget <span>&rarr;</span></a>
         </article>
         </div>
       </div>

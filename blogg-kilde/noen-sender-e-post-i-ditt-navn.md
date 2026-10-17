@@ -1,5 +1,6 @@
 ---
 tittel: "Noen sender e-post fra domenet ditt? Slik stopper du det"
+publisert: "2026-09-26"
 metabeskrivelse: "Får kunder e-post som ser ut til å komme fra deg? Slik skjer e-postforfalskning, slik sjekker du SPF, DKIM og DMARC, og hvorfor p=none ikke stopper noe."
 målsøk:
   - "noen sender e-post fra mitt domene"
