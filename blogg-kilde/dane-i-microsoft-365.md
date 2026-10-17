@@ -1,6 +1,6 @@
 ---
 tittel: "Slik setter du opp DANE i Microsoft 365 (Exchange Online)"
-publisert: "2026-10-17"
+publisert: "2026-10-10"
 canonical: "https://dmarc.cloud247.no/guider/dane-i-microsoft-365/"
 metabeskrivelse: "Steg for steg: slå på innkommende SMTP DANE med DNSSEC i Exchange Online med PowerShell, sjekk at det virker og rull tilbake trygt."
 maalsok:

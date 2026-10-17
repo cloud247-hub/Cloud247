@@ -1,6 +1,6 @@
 ---
 tittel: "Apple MDM push-sertifikat utløpt i Intune? Gjør dette"
-publisert: "2026-10-10"
+publisert: "2026-10-03"
 metabeskrivelse: "Har Apple MDM push-sertifikatet (APNs) utløpt i Intune? Slik fornyer du det uten å re-enrolle enheter, og hvilke Apple-tokens som også utløper hvert år."
 målsøk:
   - "Apple MDM push-sertifikat utløpt Intune"
