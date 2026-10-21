@@ -14,12 +14,14 @@ Each source file starts with a small front matter block:
 
 Usage:  pip install markdown pymdown-extensions && python3 scripts/build-blog.py
 Writes blogg/<slug>.html (served as /blogg/<slug>), blogg/index.html and sitemap.xml.
+The sitemap's lastmod is when a page's files last changed (from git), not its publication date.
 """
 
 import html
 import json
 import math
 import re
+import subprocess
 from datetime import date
 from pathlib import Path
 
@@ -292,11 +294,23 @@ def build_index(posts):
     (OUT / "index.html").write_text(page, encoding="utf-8")
 
 
+def last_modified(*paths):
+    """Date the given files last changed: today if they differ from git HEAD, else their last commit."""
+    dates = []
+    for path in paths:
+        def git(*args):
+            return subprocess.run(["git", *args, "--", path], cwd=ROOT, capture_output=True, text=True)
+        changed = git("status", "--porcelain").stdout.strip()
+        committed = git("log", "-1", "--format=%cs").stdout.strip()
+        dates.append(date.today().isoformat() if changed or not committed else committed)
+    return max(dates)
+
+
 def build_sitemap(posts):
-    newest = max(p["published"] for p in posts)
-    urls = [(f"{SITE}/", newest), (f"{SITE}/blogg/", newest)]
+    urls = [(f"{SITE}/", last_modified("index.html", "styles.css", "app.js")),
+            (f"{SITE}/blogg/", last_modified("blogg/index.html", "blogg/blogg.css"))]
     # Posts whose canonical lives elsewhere are left out of this site's sitemap
-    urls += [(p["canonical"], p["published"]) for p in posts if not is_external(p)]
+    urls += [(p["canonical"], last_modified(f"blogg/{p['slug']}.html")) for p in posts if not is_external(p)]
     entries = "\n".join(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{mod}</lastmod>\n  </url>" for loc, mod in urls)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{entries}\n</urlset>\n',
