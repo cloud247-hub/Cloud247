@@ -115,7 +115,29 @@
     if (activeFilter === 'favorites' && favorites.size === 0) activeFilter = 'all';
 
     updateFavoriteLabels();
+    updateCounts();
     applyFilter();
+  }
+
+  // Number of tools behind each filter chip; the contact card is not a tool and is not counted
+  function updateCounts() {
+    const tools = cards.filter((card) => !card.hasAttribute('data-fixed'));
+    filterButtons.forEach((button) => {
+      const filter = button.dataset.filter;
+      if (filter === 'contact') return;
+      const count = filter === 'all'
+        ? tools.length
+        : filter === 'favorites'
+          ? tools.filter((card) => favorites.has(card.dataset.tool)).length
+          : tools.filter((card) => (card.dataset.categories || '').split(/\s+/).includes(filter)).length;
+      let badge = button.querySelector('.chip-count');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'chip-count';
+        button.appendChild(badge);
+      }
+      badge.textContent = String(count);
+    });
   }
 
   cards.forEach((card, index) => {

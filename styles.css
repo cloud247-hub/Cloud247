@@ -562,3 +562,17 @@ a { color: inherit; }
 @media (max-width: 600px) {
   .site-nav { justify-content: center; }
 }
+
+/* Tool count in each filter chip */
+.chip-count {
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  font-size: .72rem;
+  font-weight: 850;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.filter-chip.is-active .chip-count { background: rgba(6,26,47,.14); }
