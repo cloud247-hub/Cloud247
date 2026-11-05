@@ -240,3 +240,20 @@
   .prose { font-size: 1rem; }
   .prose pre { margin-inline: -14px; border-radius: 0; }
 }
+
+/* Dark mode (tokens are switched in /styles.css) */
+:root[data-theme="dark"] .post-card { box-shadow: none; }
+:root[data-theme="dark"] .post-card .post-meta,
+:root[data-theme="dark"] .post-card-link span { color: var(--yellow-deep); }
+:root[data-theme="dark"] .post-card-link { color: var(--ink); }
+
+:root[data-theme="dark"] .prose a { color: var(--yellow); text-decoration-color: rgba(250,214,58,.5); }
+:root[data-theme="dark"] .prose a:hover { color: #fff; }
+:root[data-theme="dark"] .prose code { background: #18304b; }
+:root[data-theme="dark"] .prose pre { border: 1px solid var(--line); background: #061424; }
+:root[data-theme="dark"] .prose pre code { background: none; }
+:root[data-theme="dark"] .prose th { background: #18304b; }
+
+:root[data-theme="dark"] .post-cta { border-color: rgba(250,214,58,.4); }
+:root[data-theme="dark"] .post-cta a { color: var(--navy); text-decoration: none; }
+:root[data-theme="dark"] .post-cta a:hover { color: var(--navy); background: #fff; }

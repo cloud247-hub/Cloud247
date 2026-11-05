@@ -32,7 +32,7 @@ SRC = ROOT / "blogg-kilde"
 OUT = ROOT / "blogg"
 SITE = "https://cloud247.no"
 DEFAULT_DATE = "2026-10-17"
-ASSET_VERSION = "20261017-blogg"
+ASSET_VERSION = "20261105-dark"
 
 MONTHS = ["januar", "februar", "mars", "april", "mai", "juni", "juli",
           "august", "september", "oktober", "november", "desember"]
@@ -104,19 +104,24 @@ def header():
       <nav class="site-nav" aria-label="Hovedmeny">
         <a href="/">Verkt&oslash;y</a>
         <a href="/blogg/" aria-current="{current}">Blogg</a>
+        <button class="theme-toggle" type="button" aria-label="Bytt til m&oslash;rk modus" aria-pressed="false">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
       </nav>
     </div>
   </header>"""
 
 
 def footer():
-    return """  <footer class="site-footer">
+    return f"""  <footer class="site-footer">
     <div class="shell footer-inner">
       <span>&copy; <span id="year"></span> Cloud247</span>
       <span class="footer-links"><a href="/">Cloud Toolbox</a><a href="/blogg/">Blogg</a></span>
     </div>
   </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>"""
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="/theme.js?v={ASSET_VERSION}"></script>"""
 
 
 def head(title, description, url, og_type, ld, extra=""):
@@ -129,6 +134,7 @@ def head(title, description, url, og_type, ld, extra=""):
   <meta name="description" content="{esc(description)}">
   <link rel="canonical" href="{url}">
   <meta name="theme-color" content="#061A2F">
+  <script>(function(){{var t;try{{t=localStorage.getItem('cloud247-theme')}}catch(e){{}}if(t!=='dark'&&t!=='light'){{t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}}document.documentElement.dataset.theme=t}})();</script>
   <meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:type" content="{og_type}">

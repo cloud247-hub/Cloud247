@@ -7,6 +7,7 @@
   <meta id="meta-description" name="description" content="Cloud Toolbox fra Cloud247: verkt&oslash;y for DMARC, SPF, DKIM og DNS, s&aring;rbarhetsoverv&aring;king og Microsoft 365, Intune og Entra. Sjekk, overv&aring;k og sikre domenet ditt.">
   <link rel="canonical" href="https://cloud247.no/">
   <meta name="theme-color" content="#061A2F">
+  <script>(function(){var t;try{t=localStorage.getItem('cloud247-theme')}catch(e){}if(t!=='dark'&&t!=='light'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t})();</script>
   <meta property="og:title" content="Cloud Toolbox | Cloud247">
   <meta id="og-description" property="og:description" content="Praktiske Cloud247-verkt&oslash;y samlet p&aring; ett sted.">
   <meta property="og:type" content="website">
@@ -17,7 +18,7 @@
   <meta name="twitter:card" content="summary">
   <link rel="icon" href="assets/cloud247-mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css?v=20261031-antall">
+  <link rel="stylesheet" href="styles.css?v=20261105-dark">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -331,6 +332,10 @@
       <div class="header-actions">
         <span class="header-badge" data-no="Praktiske IT-verkt&oslash;y samlet p&aring; ett sted." data-en="Practical IT tools in one place.">Praktiske IT-verkt&oslash;y samlet p&aring; ett sted.</span>
         <a class="nav-link" href="/blogg/" data-no="Blogg" data-en="Blog">Blogg</a>
+        <button class="theme-toggle" type="button" aria-label="Bytt til m&oslash;rk modus" aria-pressed="false">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        </button>
         <div class="language-switcher" role="group" aria-label="Language">
           <button class="language-button is-active" type="button" data-language="no" aria-pressed="true">Norsk</button>
           <button class="language-button" type="button" data-language="en" aria-pressed="false">English</button>
@@ -691,6 +696,7 @@
     </div>
   </footer>
 
+  <script src="theme.js?v=20261105-dark"></script>
   <script src="app.js?v=20261031-antall"></script>
 </body>
 </html>
